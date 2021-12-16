@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.Collections.Concurrent;
 
@@ -12,6 +13,7 @@ public class ManagedLookup : IEnumerable<Guid>
 {
     private readonly Queue<Guid> _order;
     private readonly HashSet<Guid> _lookup;
+    private readonly string? _backlogPath;
     private volatile int _capacity, _size;
     private int _lock = 0;
     /// <summary>
@@ -49,36 +51,41 @@ public class ManagedLookup : IEnumerable<Guid>
     {
         if (capacity <= 0)
             throw new ArgumentOutOfRangeException(nameof(capacity), "Must be greater than 0.");
+        _backlogPath = path;
         _capacity = capacity;
         _size = 0;
         _order = new();
         _lookup = new();
         if (path != null)
         {
-            using FileStream fs = new(path, FileMode.Open);
-            byte[] guidBytes = new byte[16];
-            int readBytes = 0;
-            while ((readBytes = fs.Read(guidBytes, 0, 16)) > 0)
+            try
             {
-                int crntReadBytes = 0;
-                while (readBytes < 16 && (crntReadBytes = fs.Read(guidBytes, readBytes, 16 - readBytes)) > 0)
-                    readBytes += crntReadBytes;
-                if (readBytes == 16)
+                using FileStream fs = new(path, FileMode.Open);
+                byte[] guidBytes = new byte[16];
+                int readBytes = 0;
+                while ((readBytes = fs.Read(guidBytes, 0, 16)) > 0)
                 {
-                    Guid newGuid = new(guidBytes);
-                    _lookup.Add(newGuid);
-                    _order.Enqueue(newGuid);
-                    _size++;
+                    int crntReadBytes = 0;
+                    while (readBytes < 16 && (crntReadBytes = fs.Read(guidBytes, readBytes, 16 - readBytes)) > 0)
+                        readBytes += crntReadBytes;
+                    if (readBytes == 16)
+                    {
+                        Guid newGuid = new(guidBytes);
+                        _lookup.Add(newGuid);
+                        _order.Enqueue(newGuid);
+                        _size++;
+                    }
+                    else
+                        break;
                 }
-                else
-                    break;
+                int removeCount = _size - _capacity;
+                for (int i = 0; i < removeCount; i++)
+                    if (_order.TryDequeue(out Guid id) && _lookup.Remove(id))
+                        _size--;
+                    else
+                        break;
             }
-            int removeCount = _size - _capacity;
-            for (int i = 0; i < removeCount; i++)
-                if (_order.TryDequeue(out Guid id) && _lookup.Remove(id))
-                    _size--;
-                else
-                    break;
+            catch (Exception) { }
         }
     }
 
@@ -150,13 +157,34 @@ public class ManagedLookup : IEnumerable<Guid>
     /// Saves the collection to disk.
     /// </summary>
     /// <param name="path">The full save path.</param>
-    public void Save(string path)
+    /// <returns>true if save was successful, false otherwise.</returns>
+    public async Task<bool> Save(string? path = null)
     {
-        while (Interlocked.Exchange(ref _lock, 1) == 1) ;
-        using FileStream fs = new(path, FileMode.Create);
-        foreach (Guid guid in _order)
-            fs.Write(guid.ToByteArray());
-        Interlocked.Exchange(ref _lock, 0);
+        if (path == null)
+        {
+            if (_backlogPath == null)
+                return false;
+            else
+                path = _backlogPath;
+        }
+        FileStream? fs = null;
+        try
+        {
+            while (Interlocked.Exchange(ref _lock, 1) == 1) ;
+            fs = new(path, FileMode.Create);
+            foreach (Guid guid in _order)
+                await fs.WriteAsync(guid.ToByteArray());
+            Interlocked.Exchange(ref _lock, 0);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        finally
+        {
+            fs?.Close();
+        }
     }
 
     /// <summary>
