@@ -1,4 +1,8 @@
-﻿namespace System.Collections.Concurrent;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+
+namespace System.Collections.Concurrent;
 
 /// <summary>
 /// A thread-safe collection which stores unique guids and stores only up to the set capacity.
