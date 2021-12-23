@@ -10,7 +10,6 @@ ThreadPool.QueueUserWorkItem(_ =>
     {
         mlu.Add(Guid.NewGuid());
     }
-    Console.WriteLine("Second Thread Ended");
 });
 
 Console.WriteLine("Add Test:");
@@ -49,7 +48,7 @@ foreach (Guid guid in mlu)
 
 Console.Clear();
 
-mlu.Save(@"C:\Users\tizzy\Desktop\guids.bin");
+await mlu.Save(@"C:\Users\tizzy\Desktop\guids.bin");
 Console.WriteLine("\nStored Guids1:");
 count = 1;
 foreach (Guid guid in mlu)

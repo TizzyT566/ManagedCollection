@@ -11,7 +11,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ManagedLookup\ManagedSet.csproj" />
+	  <ProjectReference Include="..\ManagedGuidSet\ManagedGuidSet.csproj" />
 	</ItemGroup>
 
 </Project>
