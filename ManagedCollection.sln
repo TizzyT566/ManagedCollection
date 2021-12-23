@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32002.185
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagedCollection", "ManagedCollection\ManagedCollection.csproj", "{D1FD8CEC-8B1D-4109-8495-28711875589D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagedGuidSet_Test", "ManagedCollection\ManagedGuidSet_Test.csproj", "{D1FD8CEC-8B1D-4109-8495-28711875589D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagedGuidSet", "ManagedGuidSet\ManagedGuidSet.csproj", "{E0C9179F-49A9-4D5B-8829-B8169D7DBF1D}"
 EndProject
