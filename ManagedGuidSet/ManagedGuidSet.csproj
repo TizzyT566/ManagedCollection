@@ -6,7 +6,7 @@
 		<LangVersion>10</LangVersion>
 		<RepositoryUrl>https://github.com/TizzyT566/ManagedCollection</RepositoryUrl>
 		<Description>A collection for keeping track of Guids and remove them when collection is full.</Description>
-		<Version>1.0.1</Version>
+		<Version>1.0.0</Version>
 		<Authors>Thien H.</Authors>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
