@@ -8,6 +8,8 @@
 		<Description>A collection for keeping track of Guids and remove them when collection is full.</Description>
 		<Version>1.0.1</Version>
 		<Authors>Thien H.</Authors>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 </Project>

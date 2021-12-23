@@ -10,4 +10,8 @@
 		<RepositoryUrl>https://github.com/TizzyT566/ManagedCollection</RepositoryUrl>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\ManagedLookup\ManagedSet.csproj" />
+	</ItemGroup>
+
 </Project>

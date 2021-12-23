@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32002.185
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagedCollection", "ManagedCollection\ManagedCollection.csproj", "{D1FD8CEC-8B1D-4109-8495-28711875589D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedLookup", "ManagedLookup\ManagedLookup.csproj", "{4935D42C-9E68-4BEE-92E8-D80C72C34608}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagedSet", "ManagedLookup\ManagedSet.csproj", "{4935D42C-9E68-4BEE-92E8-D80C72C34608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

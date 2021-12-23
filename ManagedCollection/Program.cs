@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-ManagedLookup mlu = new(600);
+ManagedGuidSet mlu = new(600);
 Console.WriteLine($"Capacity : {mlu.Capacity}\n");
 bool _running = true;
 
@@ -55,7 +55,7 @@ count = 1;
 foreach (Guid guid in mlu)
     Console.WriteLine($"{count++,2} : {guid}");
 
-ManagedLookup mlu2 = new(60, @"C:\Users\tizzy\Desktop\guids.bin");
+ManagedGuidSet mlu2 = new(60, @"C:\Users\tizzy\Desktop\guids.bin");
 Console.WriteLine("\nStored Guids2:");
 count = 1;
 foreach (Guid guid in mlu2)

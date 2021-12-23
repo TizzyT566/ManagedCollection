@@ -9,7 +9,7 @@ namespace System.Collections.Concurrent;
 /// A thread-safe collection which stores unique guids and stores only up to the set capacity.
 /// Discards oldest items first to make room for new items when collection is full.
 /// </summary>
-public class ManagedLookup : IEnumerable<Guid>
+public class ManagedGuidSet : IEnumerable<Guid>
 {
     private readonly Queue<Guid> _order;
     private readonly HashSet<Guid> _lookup;
@@ -47,7 +47,7 @@ public class ManagedLookup : IEnumerable<Guid>
     /// </summary>
     /// <param name="capacity">The initial capacity of the collection.</param> // Chose 3 because Dictionary initializes with 3
     /// <param name="path">The path to load saved Guids from.</param>
-    public ManagedLookup(int capacity = 3, string? path = null)
+    public ManagedGuidSet(int capacity = 3, string? path = null)
     {
         if (capacity <= 0)
             throw new ArgumentOutOfRangeException(nameof(capacity), "Must be greater than 0.");
