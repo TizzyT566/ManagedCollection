@@ -29,7 +29,8 @@ Useful for keeping track of old vs new things.
 /// The maximum amount of items until old items are discarded.
 /// </summary>
 public int Capacity
-
+```
+```csharp
 /// <summary>
 /// How many items are currently in the collection.
 /// </summary>
@@ -54,26 +55,30 @@ public ManagedGuidSet(int capacity = 3, string? path = null)
 /// <param name="guid">The Guid to check.</param>
 /// <returns>true if the specified Guid is present in the collection, false otherwise.</returns>
 public bool Contains(Guid guid)
-
+```
+```csharp
 /// <summary>
 /// Adds a Guid to the collection.
 /// </summary>
 /// <param name="guid">The Guid to be added.</param>
 /// <returns>true if the Guid was added successfully, false otherwise.</returns>
 public bool Add(Guid guid)
-
+```
+```csharp
 /// <summary>
 /// Tries to remove the oldest item from the collection.
 /// </summary>
 /// <param name="guid">The removed Guid.</param>
 /// <returns>true if an item was removed from the collection, false otherwise.</returns>
 public bool TryRemove(out Guid? guid)
-
+```
+```csharp
 /// <summary>
 /// Clears the collection.
 /// </summary>
 public void Clear()
-
+```
+```csharp
 /// <summary>
 /// Saves the collection to disk.
 /// </summary>
@@ -106,8 +111,9 @@ else
 
 // Saving the collection to disk
 string path = "some path here";
-msg.Save("Some Path here");
+if(await msg.Save("Some Path here"))
+    Console.WriteLine("Saved.");
 
 // Loading saved collection on construction with a new capacity of 300
-ManagedGuidSet mgs = new(300, path);
+ManagedGuidSet mgs2 = new(300, path);
 ```
